@@ -26,6 +26,12 @@ PROFILES = {
         "energy": 0.35,
         "likes_acoustic": True,
     },
+    "Deep Intense Rock": {
+        "genre": "rock",
+        "mood": "intense",
+        "energy": 0.95,
+        "likes_acoustic": False,
+    },
 
     # --- Edge case profiles ---
 
@@ -36,6 +42,16 @@ PROFILES = {
         "genre": "pop",
         "mood": "sad",
         "energy": 0.90,
+        "likes_acoustic": False,
+    },
+
+    # Genre not in catalog: "metal" has zero matches.
+    # The system must fall back entirely on mood + energy + acoustic scores.
+    # Reveals what happens when the heaviest weight (genre, 0.30) is always 0.
+    "Ghost Genre": {
+        "genre": "metal",
+        "mood": "intense",
+        "energy": 0.92,
         "likes_acoustic": False,
     },
 

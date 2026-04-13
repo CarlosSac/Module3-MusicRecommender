@@ -112,30 +112,23 @@ Seven user profiles were tested in total. Three were straightforward (High-Energ
 
 ## Limitations and Risks
 
-Summarize some limitations of your recommender.
-
-Examples:
-
-- It only works on a tiny catalog
-- It does not understand lyrics or language
-- It might over favor one genre or mood
-
-You will go deeper on this in your model card.
+- Genre is the biggest single weight. A song from the wrong genre will almost always lose, even if everything else matches.
+- If a genre or mood is not in the catalog, those weights are wasted. A user looking for metal or country gets nothing useful.
+- The catalog only has 15 songs. Results are heavily shaped by which genres have more entries — lofi users get 3 matches, most others get 1.
+- Tempo, valence, danceability, and lyrics are ignored. Two songs in the same genre can sound completely different and still score the same.
+- The system treats every user with the same fixed weights. Someone who cares a lot about energy but not genre has no way to say that.
 
 ---
 
 ## Reflection
 
-Read and complete `model_card.md`:
-
 [**Model Card**](model_card.md)
 
 Write 1 to 2 paragraphs here about what you learned:
 
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
+Building this made it clear how much a recommender depends on its data, not just its logic. The scoring rules made sense on paper, but the results were only as good as the catalog behind them. A user looking for metal or country got nothing useful — not because the algorithm was wrong, but because those genres simply were not there.
 
----
+## The most surprising result came from the Acoustic Chaos profile. The system recommended a folk song to a user who wanted high energy, just because genre and mood matched. It was technically correct by the scoring rules, but intuitively wrong. That gap between "correct by the formula" and "actually useful" is probably the most important thing to take away from this project. Real recommenders have to deal with that gap at a much larger scale.
 
 ## 7. `model_card_template.md`
 
