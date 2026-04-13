@@ -33,7 +33,7 @@ Genres represented: pop, lofi, rock, ambient, jazz, synthwave, indie pop, hip-ho
 
 Moods represented: happy, chill, intense, relaxed, moody, focused, confident, melancholic, uplifting, nostalgic, romantic.
 
-Five songs were added to the original ten to improve diversity. Still, some genres (like lofi) have three songs while most others have only one. 
+15 songs were added to the original ten to improve diversity. Still, some genres (like lofi) have three songs while most others have only one. 
 ---
 
 ## 5. Strengths
