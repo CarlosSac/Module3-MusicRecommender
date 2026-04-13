@@ -131,7 +131,7 @@ Write 1 to 2 paragraphs here about what you learned:
 
 Building this made it clear how much a recommender depends on its data, not just its logic. The scoring rules made sense on paper, but the results were only as good as the catalog behind them. A user looking for metal or country got nothing useful, not because the algorithm was wrong, but because those genres simply were not there.
 
-## The most surprising result came from the Acoustic Chaos profile. The system recommended a folk song to a user who wanted high energy, just because genre and mood matched. It was technically correct by the scoring rules, but it is wrong. That gap between "correct by the formula" and "actually useful" is probably the most important thing from the project. Real recommenders have to deal with that gap at a much larger scale.
+The most surprising result came from the Acoustic Chaos profile. The system recommended a folk song to a user who wanted high energy, just because genre and mood matched. It was technically correct by the scoring rules, but it is wrong. That gap between "correct by the formula" and "actually useful" is probably the most important thing from the project. Real recommenders have to deal with that gap at a much larger scale.
 
 ## 7. `model_card_template.md`
 
