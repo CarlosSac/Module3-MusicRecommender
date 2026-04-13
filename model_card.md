@@ -8,11 +8,7 @@
 
 ## 2. Intended Use
 
-VibeMatch suggests songs based on a user's stated preferences. It is built for classroom exploration — not for real users or production apps.
-
-It assumes the user can describe their taste in four words: a genre, a mood, a target energy level, and whether they like acoustic sounds. It does not learn from listening history or behavior.
-
-It should not be used to make recommendations for real people in a real product. The catalog is too small and the scoring is too simple for that to be fair or useful.
+VibeMatch suggests songs based on a user's stated preferences. It assumes the user can describe their taste in four words: a genre, a mood, a target energy level, and whether they like acoustic sounds. It does not learn from listening history or behavior.
 
 ---
 
@@ -37,8 +33,7 @@ Genres represented: pop, lofi, rock, ambient, jazz, synthwave, indie pop, hip-ho
 
 Moods represented: happy, chill, intense, relaxed, moody, focused, confident, melancholic, uplifting, nostalgic, romantic.
 
-Five songs were added to the original ten to improve diversity. Still, some genres (like lofi) have three songs while most others have only one. The data reflects a narrow slice of musical taste — mostly Western, mostly modern, with no representation of regional or non-English music.
-
+Five songs were added to the original ten to improve diversity. Still, some genres (like lofi) have three songs while most others have only one. 
 ---
 
 ## 5. Strengths
@@ -47,15 +42,13 @@ The system works best when the user's preferences match a well-represented genre
 
 The scoring is fully transparent. Every recommendation comes with a breakdown of exactly why it ranked where it did. There are no hidden signals or black-box decisions.
 
-It also handles missing preferences gracefully. If the user does not include `likes_acoustic`, that part of the score is simply skipped without crashing.
+It also handles missing preferences. If the user does not include `likes_acoustic`, that part of the score is simply skipped without crashing.
 
 ---
 
 ## 6. Limitations and Bias
 
-**Genre creates a permanent filter bubble.** Genre carries the single largest weight (0.30) and is a binary match — you either get it or you get zero. A user whose preferred genre is not in the catalog (like "metal") can never earn that 0.30, meaning they are structurally disadvantaged compared to every other user. More subtly, a genre match with a weak mood and energy fit can still outrank a near-perfect match from a different genre. The system never discovers cross-genre connections.
-
-**The energy formula quietly favors middle-of-the-road users.** Energy closeness is calculated as `(1 - abs(song.energy - user.energy)) * 0.25`. A user targeting energy 0.5 gets a decent score from almost every song in the catalog because no song is more than ~0.45 away. A user targeting energy 0.95 can only score well against two or three songs (Gym Hero at 0.93, Storm Runner at 0.91). Extreme-energy users are penalized by the distribution of the data, not by any real mismatch in preference.
+**Genre creates a permanent filter bubble.** Genre carries the single largest weight (0.30) and is a binary match. A user whose preferred genre is not in the catalog (like "metal") can never earn that 0.30, meaning they are structurally disadvantaged compared to every other user. More subtly, a genre match with a weak mood and energy fit can still outrank a near-perfect match from a different genre. The system never discovers cross-genre connections.
 
 **Rare moods are underrepresented.** The catalog contains 3 chill songs and 2 happy songs, but only 1 song each for moods like romantic, melancholic, nostalgic, and confident. A "chill" user gets up to 3 mood-match bonuses to compete for, while a "romantic" user can only ever match 1 song on mood.
 
@@ -69,15 +62,13 @@ It also handles missing preferences gracefully. If the user does not include `li
 
 Seven user profiles were tested: three standard (High-Energy Pop, Chill Lofi, Deep Intense Rock) and four adversarial (Sad but Hype, Ghost Genre, Acoustic Chaos, Middle of the Road). For each, I looked at whether the top result made intuitive sense, how sharply scores dropped after #1, and whether the reasons matched the expected scoring logic.
 
-**High-Energy Pop vs. Sad but Hype** — Both share genre=pop and energy=0.9, but swap mood from happy to sad. Sunrise City scored 0.94 for the first profile because it matched all four criteria. In Sad but Hype it dropped to #2 because no pop/sad song exists — the mood weight was permanently wasted. This shows that a missing mood in the catalog reduces the user's maximum possible score by 0.25.
+**High-Energy Pop vs. Sad but Hype:** Both share genre=pop and energy=0.9, but swap mood from happy to sad. Sunrise City scored 0.94 for the first profile because it matched all four criteria. In Sad but Hype it dropped to #2 because no pop/sad song exists — the mood weight was permanently wasted. This shows that a missing mood in the catalog reduces the user's maximum possible score by 0.25.
 
-**Chill Lofi vs. Middle of the Road** — Chill Lofi produced the most confident results (0.97 and 0.92) because the catalog has three lofi/chill songs. Middle of the Road had one perfect match at 0.95, then fell to 0.38 for second place. Users whose genre appears more often get better results.
+**Chill Lofi vs. Middle of the Road:** Chill Lofi produced the most confident results (0.97 and 0.92) because the catalog has three lofi/chill songs. Middle of the Road had one perfect match at 0.95, then fell to 0.38 for second place. Users whose genre appears more often get better results.
 
-**Deep Intense Rock vs. Ghost Genre (metal)** — Storm Runner scored 0.97 for the rock user. For the metal user wanting the same mood and energy, the top score was only 0.69 because the genre weight was always zero. The system degraded gracefully but the ceiling dropped significantly.
+**Deep Intense Rock vs. Ghost Genre (metal):** Storm Runner scored 0.97 for the rock user. For the metal user wanting the same mood and energy, the top score was only 0.69 because the genre weight was always zero. The system degraded gracefully but the ceiling dropped significantly.
 
-**Acoustic Chaos (folk, nostalgic, energy=0.95)** — Dirt Road Memories scored 0.81 through genre+mood match, but its energy match was only +0.09 because folk songs are inherently low energy. The system recommended a song that directly contradicted the energy preference, exposing that high-weight categorical features can override numeric ones.
-
-**Automated tests** — The two tests in `test_recommender.py` verify that a pop/happy song ranks above a lofi/chill song for a matching user, and that explanations are non-empty strings. Both pass.
+**Acoustic Chaos (folk, nostalgic, energy=0.95):** Dirt Road Memories scored 0.81 through genre+mood match, but its energy match was only +0.09 because folk songs are inherently low energy. The system recommended a song that directly contradicted the energy preference, exposing that high-weight categorical features can override numeric ones.
 
 ---
 
