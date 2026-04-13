@@ -53,11 +53,11 @@ Genre carries the single largest weight (0.30), so a song that perfectly matches
 
 ### Output
 
-<img src="output.png" width="500" alt="Output">
+<img src="docs/output.png" width="600" alt="Output">
 
 **More profiles**
 
-<img src="other.png" width="500" alt="Output">
+<img src="docs/other.png" width="600" alt="Output">
 
 ## Getting Started
 
