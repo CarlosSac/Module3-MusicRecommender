@@ -38,12 +38,12 @@ user_prefs = {
 
 For each song, it adds up weighted points based on how well the song matches the profile:
 
-| Rule | Weight |
-|---|---|
-| Genre matches user's preferred genre | 0.30 |
-| Mood matches user's preferred mood | 0.25 |
-| `(1 - abs(song.energy - user.energy))` | 0.25 |
-| Acoustic fit (`acousticness` or `1 - acousticness`) | 0.20 |
+| Rule                                                | Weight |
+| --------------------------------------------------- | ------ |
+| Genre matches user's preferred genre                | 0.30   |
+| Mood matches user's preferred mood                  | 0.25   |
+| `(1 - abs(song.energy - user.energy))`              | 0.25   |
+| Acoustic fit (`acousticness` or `1 - acousticness`) | 0.20   |
 
 **How are songs chosen?**
 
@@ -53,7 +53,7 @@ All songs are scored, sorted in descending order, and the top `k` (default 5) ar
 
 Genre carries the single largest weight (0.30), so a song that perfectly matches mood, energy, and acousticness but differs in genre will almost always lose to a genre-match with weaker other scores. The system may also under-serve users whose taste crosses genre lines, since it treats genre as a binary yes/no rather than a spectrum.
 
----
+## <img src="docs/output.png" width="400" alt="PawPal+ class diagram">
 
 ## Getting Started
 
