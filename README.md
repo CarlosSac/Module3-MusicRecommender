@@ -11,8 +11,6 @@ Your goal is to:
 - Evaluate what your system gets right and wrong
 - Reflect on how this mirrors real world AI recommenders
 
-Replace this paragraph with your own summary of what your version does.
-
 Real-world recommenders like Spotify or YouTube learn from massive behavioral datasets (plays, skips, likes) to determine what a user wants next. My version focuses in the core functions: instead of learning from behavior, my recommender define a user's taste explicitly through a profile (preferred genre, mood, energy level, and acoustic preference), then score every song by how closely it matches. This makes the system transparent and easy to trace, at the cost of personalization depth. The priority here is interpretability and correctness of the scoring logic over scale or surprise.
 
 ## How The System Works
@@ -53,7 +51,13 @@ All songs are scored, sorted in descending order, and the top `k` (default 5) ar
 
 Genre carries the single largest weight (0.30), so a song that perfectly matches mood, energy, and acousticness but differs in genre will almost always lose to a genre-match with weaker other scores. The system may also under-serve users whose taste crosses genre lines, since it treats genre as a binary yes/no rather than a spectrum.
 
-## <img src="docs/output.png" width="400" alt="PawPal+ class diagram">
+### Output
+
+<img src="output.png" width="500" alt="Output">
+
+**More profiles**
+
+<img src="other.png" width="500" alt="Output">
 
 ## Getting Started
 
@@ -94,11 +98,15 @@ You can add more tests in `tests/test_recommender.py`.
 
 ## Experiments You Tried
 
-Use this section to document the experiments you ran. For example:
+Seven user profiles were tested in total. Three were straightforward (High-Energy Pop, Chill Lofi, Deep Intense Rock). Four were designed to break or stress the system.
 
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+**Sad but Hype** — genre=pop, mood=sad, energy=0.9. No pop/sad song exists in the catalog, so the mood weight was always wasted. The top result had no mood match at all.
+
+**Ghost Genre** — genre=metal, which is not in the catalog. The system fell back to mood and energy only. Every song scored at most 0.69 instead of the usual 0.94+.
+
+**Acoustic Chaos** — genre=folk, mood=nostalgic, energy=0.95. Folk songs are naturally low energy, so the system recommended a song that matched genre and mood but directly contradicted the energy target. Genre and mood won over energy.
+
+**Middle of the Road** — genre=jazz, energy=0.5. One perfect match scored 0.95, then second place dropped to 0.38. Having only one jazz song in the catalog made the results very uneven.
 
 ---
 
