@@ -50,8 +50,11 @@ All songs are scored, sorted in descending order, and the top `k` (default 5) ar
 **Potential biases to expect**
 
 Genre carries the single largest weight (0.30), so a song that perfectly matches mood, energy, and acousticness but differs in genre will almost always lose to a genre-match with weaker other scores. The system may also under-serve users whose taste crosses genre lines, since it treats genre as a binary yes/no rather than a spectrum.
+**Diagram**
 
-### Output
+<img src="docs/diagram.png" alt="Diagram">
+
+**Output**
 
 <img src="docs/output.png" width="600" alt="Output">
 
@@ -100,13 +103,13 @@ You can add more tests in `tests/test_recommender.py`.
 
 Seven user profiles were tested in total. Three were straightforward (High-Energy Pop, Chill Lofi, Deep Intense Rock). Four were designed to break or stress the system.
 
-**Sad but Hype** — genre=pop, mood=sad, energy=0.9. No pop/sad song exists in the catalog, so the mood weight was always wasted. The top result had no mood match at all.
+**Sad but Hype:** genre=pop, mood=sad, energy=0.9. No pop/sad song exists in the catalog, so the mood weight was always wasted. The top result had no mood match at all.
 
-**Ghost Genre** — genre=metal, which is not in the catalog. The system fell back to mood and energy only. Every song scored at most 0.69 instead of the usual 0.94+.
+**Ghost Genre:** genre=metal, which is not in the catalog. The system fell back to mood and energy only. Every song scored at most 0.69 instead of the usual 0.94+.
 
-**Acoustic Chaos** — genre=folk, mood=nostalgic, energy=0.95. Folk songs are naturally low energy, so the system recommended a song that matched genre and mood but directly contradicted the energy target. Genre and mood won over energy.
+**Acoustic Chaos:** genre=folk, mood=nostalgic, energy=0.95. Folk songs are naturally low energy, so the system recommended a song that matched genre and mood but directly contradicted the energy target. Genre and mood won over energy.
 
-**Middle of the Road** — genre=jazz, energy=0.5. One perfect match scored 0.95, then second place dropped to 0.38. Having only one jazz song in the catalog made the results very uneven.
+**Middle of the Road:** genre=jazz, energy=0.5. One perfect match scored 0.95, then second place dropped to 0.38. Having only one jazz song in the catalog made the results very uneven.
 
 ---
 
@@ -126,9 +129,9 @@ Seven user profiles were tested in total. Three were straightforward (High-Energ
 
 Write 1 to 2 paragraphs here about what you learned:
 
-Building this made it clear how much a recommender depends on its data, not just its logic. The scoring rules made sense on paper, but the results were only as good as the catalog behind them. A user looking for metal or country got nothing useful — not because the algorithm was wrong, but because those genres simply were not there.
+Building this made it clear how much a recommender depends on its data, not just its logic. The scoring rules made sense on paper, but the results were only as good as the catalog behind them. A user looking for metal or country got nothing useful, not because the algorithm was wrong, but because those genres simply were not there.
 
-## The most surprising result came from the Acoustic Chaos profile. The system recommended a folk song to a user who wanted high energy, just because genre and mood matched. It was technically correct by the scoring rules, but intuitively wrong. That gap between "correct by the formula" and "actually useful" is probably the most important thing to take away from this project. Real recommenders have to deal with that gap at a much larger scale.
+## The most surprising result came from the Acoustic Chaos profile. The system recommended a folk song to a user who wanted high energy, just because genre and mood matched. It was technically correct by the scoring rules, but it is wrong. That gap between "correct by the formula" and "actually useful" is probably the most important thing from the project. Real recommenders have to deal with that gap at a much larger scale.
 
 ## 7. `model_card_template.md`
 
